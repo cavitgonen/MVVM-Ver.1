@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MVVM.ViewModels;assembly=MVVM"
+             x:Class="MVVM.Views.ListViewPage1"
+             x:Name="ListViewPage1">
+    <ContentPage.BindingContext>
+        <viewModels:PersonViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Ayarlar" Order="Secondary" Priority="1"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView HasUnevenRows="True" 
+                      x:Name="lstPerson" 
+                      ItemsSource="{Binding Person} "
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding Path=BindingContext.RefreshCommand,
+                      Source={x:Reference ListViewPage1}}"
+                      IsRefreshing="{Binding IsRefreshing, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell Text="{Binding Name}" Detail="{Binding Surname}"></ImageCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
